@@ -1,56 +1,49 @@
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
         
+        nums = sorted(nums)
         i = 0
-        j = 1
-        k = 2
-        new_nums = []
-        len_nums = len(nums)
-
-        if len(set(nums)) == 1 and sum(nums) == 0:
-            return [[nums[i],nums[j],nums[k]]]
-
-        while i < len_nums:
-
-            if j > len_nums -1:
-                i += 1
-                j = i + 1
-                k = j + 1
+        n = len(nums)
+        result = []
+        
+        
+        for i in range(len(nums)):
+            
+            if i > 0 and nums[i] == nums[i - 1]:
                 continue
+    
+            j = i + 1
+            k = n - 1
 
-            if k > len_nums - 1:
-                j += 1
-                k = j + 1
-                continue
+            while j < k:
+                r = nums[i] + nums[j] + nums[k]
+                if r == 0:
+                    result.append([nums[i], nums[j], nums[k]])
 
-            r = nums[i] + nums[j] + nums[k]
-            if r == 0:
+                    
+                    while j < n-1 and nums[j] == nums[j + 1]:
+                        j += 1
+                    
+                    while k > 0 and nums[k] == nums[k - 1]:
+                        k -= 1
+
+                    j += 1
+                    k -= 1
+
+                if r < 0:
+                    j += 1
                 
-                nw = len(new_nums)
-                z = 0
-                r = True
-                
-                while z < nw:
-                    if nums[i] in new_nums[z] and nums[j] in new_nums[z] and nums[k] in new_nums[z]:
-                        if nums[i] == 0 and nums[j] == 0 and nums[k] == 0:
-                            z += 1
-                            continue
-                        r = False
-                    z += 1
-
-                if [nums[i] , nums[j] , nums[k]] in new_nums:
-                    k += 1
-                    continue
-                
-                if r:
-                    new_nums.append([nums[i] , nums[j] , nums[k]])
-
-            k += 1
-
-        return new_nums
+                if r > 0:
+                    k -= 1
+            
+    
+    
+        return result
 
 s = Solution()
-print(s.threeSum([4,4,3,-5,0,0,0,-2,3,-5,-5,0]))
+# print(s.threeSum([1,2,-2,-1]))
+print(s.threeSum([0,0,0]))
+
             
             
         
